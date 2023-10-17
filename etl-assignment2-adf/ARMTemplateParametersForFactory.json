@@ -7,6 +7,12 @@
 		},
 		"etl_assignment2_ls_connectionString": {
 			"value": ""
+		},
+		"etl_assignment2_dl_ls_accountKey": {
+			"value": ""
+		},
+		"etl_assignment2_dl_ls_properties_typeProperties_url": {
+			"value": "https://etlassignment2dl.dfs.core.windows.net/"
 		}
 	}
 }

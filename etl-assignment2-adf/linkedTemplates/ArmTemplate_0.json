@@ -10,6 +10,14 @@
 		"etl_assignment2_ls_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'etl_assignment2_ls'"
+		},
+		"etl_assignment2_dl_ls_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'etl_assignment2_dl_ls'"
+		},
+		"etl_assignment2_dl_ls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://etlassignment2dl.dfs.core.windows.net/"
 		}
 	},
 	"variables": {
@@ -30,7 +38,47 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DimCustomer')]",
+			"name": "[concat(parameters('factoryName'), '/pl_to_csv')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 1
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/etl_assignment2_dl_ls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('etl_assignment2_dl_ls_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('etl_assignment2_dl_ls_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DimCustomer_source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -175,7 +223,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DimDate')]",
+			"name": "[concat(parameters('factoryName'), '/DimDate_source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -285,7 +333,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DimGeography')]",
+			"name": "[concat(parameters('factoryName'), '/DimGeography_source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -353,7 +401,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DimProduct')]",
+			"name": "[concat(parameters('factoryName'), '/DimProduct_source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -535,7 +583,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/FactInternetSales')]",
+			"name": "[concat(parameters('factoryName'), '/FactInternetSales_source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -691,6 +739,33 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/etl_assignment2_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DimCustomer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "etl_assignment2_dl_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "advworks"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/etl_assignment2_dl_ls')]"
 			]
 		}
 	]
