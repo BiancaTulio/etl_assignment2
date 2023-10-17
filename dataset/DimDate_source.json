@@ -1,5 +1,5 @@
 {
-	"name": "DimDate",
+	"name": "DimDate_source",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "etl_assignment2_ls",

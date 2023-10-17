@@ -1,5 +1,5 @@
 {
-	"name": "DimGeography",
+	"name": "DimGeography_source",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "etl_assignment2_ls",

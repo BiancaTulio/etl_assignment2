@@ -1,5 +1,5 @@
 {
-	"name": "DimCustomer",
+	"name": "DimCustomer_source",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "etl_assignment2_ls",
