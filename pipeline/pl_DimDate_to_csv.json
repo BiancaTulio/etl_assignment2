@@ -1,5 +1,5 @@
 {
-	"name": "pl_DimCustomer_to_csv",
+	"name": "pl_DimDate_to_csv",
 	"properties": {
 		"activities": [
 			{
@@ -43,13 +43,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DimCustomer_source",
+						"referenceName": "DimDate_source",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DimCustomer",
+						"referenceName": "DimDate",
 						"type": "DatasetReference"
 					}
 				]
